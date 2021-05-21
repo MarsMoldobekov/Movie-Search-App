@@ -1,2 +1,3 @@
 rootProject.name = "Movie Search App"
 include ':app'
+include ':testapp'
