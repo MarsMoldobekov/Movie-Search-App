@@ -1,4 +1,4 @@
-package com.example.moviesfinder;
+package com.example.moviesearchapp;
 
 import android.content.Context;
 

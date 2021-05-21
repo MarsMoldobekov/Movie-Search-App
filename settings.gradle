@@ -1,2 +1,2 @@
-rootProject.name = "Movies Finder"
+rootProject.name = "Movie Search App"
 include ':app'
