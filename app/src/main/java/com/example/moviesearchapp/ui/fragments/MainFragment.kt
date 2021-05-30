@@ -2,16 +2,16 @@ package com.example.moviesearchapp.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.example.moviesearchapp.R
 import com.example.moviesearchapp.databinding.FragmentMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainFragment : Fragment() {
+
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -21,27 +21,14 @@ class MainFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLi
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        binding.navigationView.setOnNavigationItemSelectedListener(this@MainFragment)
+
+        val navHostFragment: NavHostFragment = requireActivity()
+            .supportFragmentManager
+            .findFragmentById(R.id.container) as NavHostFragment
+        val navController = navHostFragment.navController
+        NavigationUI.setupWithNavController(binding.navigationView, navController)
+
         return binding.root
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_item_list -> {
-                Toast.makeText(requireContext(), "List", Toast.LENGTH_SHORT).show()
-                return true
-            }
-            R.id.menu_item_favourite -> {
-                Toast.makeText(requireContext(), "Favourite", Toast.LENGTH_SHORT).show()
-                return true
-            }
-            R.id.menu_item_home -> {
-                Toast.makeText(requireContext(), "Home", Toast.LENGTH_SHORT).show()
-                return true
-            }
-        }
-
-        return false
     }
 
     override fun onDestroy() {
