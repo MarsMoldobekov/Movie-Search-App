@@ -22,9 +22,8 @@ class MainFragment : Fragment() {
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
-        val navHostFragment: NavHostFragment = requireActivity()
-            .supportFragmentManager
-            .findFragmentById(R.id.container) as NavHostFragment
+        val navHostFragment: NavHostFragment =
+            childFragmentManager.findFragmentById(R.id.container) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.navigationView, navController)
 
