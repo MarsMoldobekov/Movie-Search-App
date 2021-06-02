@@ -35,7 +35,7 @@
 
     <Button
         android:id="@+id/button_login"
-        android:layout_width="@dimen/match_constrains"
+        android:layout_width="@dimen/match_constraints"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/login_screen_margin"
         android:layout_marginEnd="@dimen/login_screen_margin"

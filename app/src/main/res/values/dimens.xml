@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="match_constrains">0dp</dimen>
+    <dimen name="match_constraints">0dp</dimen>
     <dimen name="login_screen_margin">15dp</dimen>
     <dimen name="cardview_layout_margin">8dp</dimen>
+    <dimen name="fragment_movie_list_movie_list_margin">8dp</dimen>
+    <dimen name="fragment_movie_list_search_bar_margin_vertical">8dp</dimen>
+    <dimen name="fragment_movie_list_search_bar_drawable_padding">16dp</dimen>
+    <dimen name="fragment_movie_list_search_bar_elevation">2dp</dimen>
+    <dimen name="fragment_movie_list_search_bar_padding_horizontal">16dp</dimen>
 </resources>
