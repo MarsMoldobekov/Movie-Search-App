@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.moviesearchapp.databinding.FragmentLoginBinding
+import com.example.moviesearchapp.ui.extenstions.createAndShowWithoutAction
 import com.example.moviesearchapp.viewmodel.ViewModel
 
 class LoginFragment : Fragment() {
@@ -32,6 +33,10 @@ class LoginFragment : Fragment() {
         viewModel.getLiveDataAuth().observe(requireActivity()) {
             val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
             findNavController().navigate(action)
+        }
+
+        viewModel.getLiveDataError().observe(requireActivity()) {
+            binding.buttonLogin.createAndShowWithoutAction(it.toString())
         }
 
         return binding.root

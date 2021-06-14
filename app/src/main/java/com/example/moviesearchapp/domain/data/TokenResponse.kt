@@ -1,7 +1,9 @@
 package com.example.moviesearchapp.domain.data
 
+import com.google.gson.annotations.SerializedName
+
 data class TokenResponse(
-    val expires_at: String?,
-    val request_token: String?,
-    val success: Boolean?
+    @SerializedName("success") val success: Boolean?,
+    @SerializedName("expires_at") val expiresAt: String?,
+    @SerializedName("request_token") val requestToken: String?
 )
