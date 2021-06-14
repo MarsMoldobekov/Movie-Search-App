@@ -4,8 +4,6 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="login">Login</string>
-    <string name="api_key_v3_auth">8c57cc1e25398c40b4abda300f9dd341</string>
-    <string name="api_key_v4_auth">eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4YzU3Y2MxZTI1Mzk4YzQwYjRhYmRhMzAwZjlkZDM0MSIsInN1YiI6IjYwYTc5NGU5N2RmZGE2MDA1OTQwYzQ5NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.7duM-2HKv2kRt-DNn0zKQNUIyY74EuFiN6S3VeAGcCM</string>
     <string name="menu_item_home">Home</string>
     <string name="menu_item_favourite">Favourite</string>
     <string name="menu_item_list">List</string>
