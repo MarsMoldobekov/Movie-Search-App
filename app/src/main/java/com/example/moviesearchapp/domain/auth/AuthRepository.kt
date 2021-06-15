@@ -39,7 +39,10 @@ class AuthRepository {
                                 response.body()?.success?.let { callback.onSuccess(it) }
                             }
 
-                            override fun onFailure(call: Call<LoginResponse>, throwable: Throwable) {
+                            override fun onFailure(
+                                call: Call<LoginResponse>,
+                                throwable: Throwable
+                            ) {
                                 callback.onError(throwable)
                             }
                         })

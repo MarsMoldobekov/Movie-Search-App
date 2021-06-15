@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.moviesearchapp.databinding.FragmentLoginBinding
-import com.example.moviesearchapp.ui.extenstions.createAndShowWithoutAction
 import com.example.moviesearchapp.viewmodel.ViewModel
 
 class LoginFragment : Fragment() {
@@ -35,8 +34,8 @@ class LoginFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        viewModel.getLiveDataError().observe(requireActivity()) {
-            binding.buttonLogin.createAndShowWithoutAction(it.toString())
+        viewModel.getLiveDataLoginError().observe(requireActivity()) {
+            //TODO(inform a user about an error)
         }
 
         return binding.root
