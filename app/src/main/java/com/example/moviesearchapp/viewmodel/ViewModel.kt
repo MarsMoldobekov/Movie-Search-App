@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.moviesearchapp.domain.CallbackNet
 import com.example.moviesearchapp.domain.Repository
 import com.example.moviesearchapp.domain.data.Movie
+import com.example.moviesearchapp.domain.data.MovieDetails
 
 class ViewModel : ViewModel() {
     private val liveDataAuth = MutableLiveData<Boolean>()
@@ -14,6 +15,8 @@ class ViewModel : ViewModel() {
     private val liveDataUpcoming = MutableLiveData<List<Movie>>()
     private val liveDataPopular = MutableLiveData<List<Movie>>()
     private val liveDataTopRated = MutableLiveData<List<Movie>>()
+    private val liveDataMovieDetails = MutableLiveData<MovieDetails>()
+    private val liveDataMovieDetailsError = MutableLiveData<Throwable>()
 
     private val repository = Repository()
 
@@ -25,6 +28,18 @@ class ViewModel : ViewModel() {
 
             override fun onError(throwable: Throwable) {
                 liveDataLoginError.value = throwable
+            }
+        })
+    }
+
+    fun onItemPressed(movie: Movie) {
+        repository.getDetails(movie.id, object : CallbackNet<MovieDetails> {
+            override fun onSuccess(value: MovieDetails) {
+                liveDataMovieDetails.value = value
+            }
+
+            override fun onError(throwable: Throwable) {
+                liveDataMovieDetailsError.value = throwable
             }
         })
     }
@@ -82,4 +97,8 @@ class ViewModel : ViewModel() {
     fun getLiveDataPopular(): LiveData<List<Movie>> = liveDataPopular
 
     fun getLiveDataTopRated(): LiveData<List<Movie>> = liveDataTopRated
+
+    fun getLiveDataMovieDetails(): LiveData<MovieDetails> = liveDataMovieDetails
+
+    fun getLiveDataMovieDetailsError(): LiveData<Throwable> = liveDataMovieDetailsError
 }

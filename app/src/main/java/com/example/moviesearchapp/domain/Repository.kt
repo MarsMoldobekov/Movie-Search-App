@@ -40,7 +40,11 @@ class Repository {
         moviesRepository.getTopRated(language, page, region, callbackNet)
     }
 
-    fun getDetails(movieId: Int, language: String, callbackNet: CallbackNet<MovieDetails>) {
+    fun getDetails(
+        movieId: Int,
+        callbackNet: CallbackNet<MovieDetails>,
+        language: String = "en_US"
+    ) {
         moviesRepository.getDetails(movieId, language, callbackNet)
     }
 }

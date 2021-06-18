@@ -63,7 +63,6 @@ class MoviesRepository {
                 override fun onFailure(call: Call<MoviesListResponse>, t: Throwable) {
                     callbackNet.onError(t)
                 }
-
             })
     }
 

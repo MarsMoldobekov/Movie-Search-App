@@ -9,13 +9,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearchapp.databinding.FragmentListBinding
+import com.example.moviesearchapp.domain.data.Movie
 import com.example.moviesearchapp.ui.adapter.MoviesAdapter
+import com.example.moviesearchapp.ui.extenstions.createAndShowWithoutAction
 import com.example.moviesearchapp.ui.listener.RecyclerItemClickListener
 import com.example.moviesearchapp.viewmodel.ViewModel
 
 class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
+
+    private val upcomingList = mutableListOf<Movie>()
+    private val popularList = mutableListOf<Movie>()
+    private val topRatedList = mutableListOf<Movie>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +52,7 @@ class ListFragment : Fragment() {
                     binding.upcomingMovieList,
                     object : RecyclerItemClickListener.OnItemClickListener {
                         override fun onItemClicked(view: View, position: Int) {
-                            //TODO(implement onItemClicked event)
+                            viewModel.onItemPressed(upcomingList[position])
                         }
 
                         override fun onLongItemClicked(view: View, position: Int) {
@@ -70,7 +76,7 @@ class ListFragment : Fragment() {
                     binding.popularMovieList,
                     object : RecyclerItemClickListener.OnItemClickListener {
                         override fun onItemClicked(view: View, position: Int) {
-                            //TODO(implement onItemClicked event)
+                            viewModel.onItemPressed(popularList[position])
                         }
 
                         override fun onLongItemClicked(view: View, position: Int) {
@@ -95,7 +101,7 @@ class ListFragment : Fragment() {
                     binding.topRatedMovieList,
                     object : RecyclerItemClickListener.OnItemClickListener {
                         override fun onItemClicked(view: View, position: Int) {
-                            //TODO(implement onItemClicked event)
+                            viewModel.onItemPressed(topRatedList[position])
                         }
 
                         override fun onLongItemClicked(view: View, position: Int) {
@@ -108,15 +114,22 @@ class ListFragment : Fragment() {
         }
 
         viewModel.getLiveDataUpcoming().observe(requireActivity()) {
-            upcomingAdapter.addMovies(it)
+            upcomingList.addAll(it)
+            upcomingAdapter.addMovies(upcomingList)
         }
 
         viewModel.getLiveDataPopular().observe(requireActivity()) {
-            popularAdapter.addMovies(it)
+            popularList.addAll(it)
+            popularAdapter.addMovies(popularList)
         }
 
         viewModel.getLiveDataTopRated().observe(requireActivity()) {
-            topRatedAdapter.addMovies(it)
+            topRatedList.addAll(it)
+            topRatedAdapter.addMovies(topRatedList)
+        }
+
+        viewModel.getLiveDataError().observe(requireActivity()) {
+            binding.fragmentListRoot.createAndShowWithoutAction(it.toString())
         }
 
         return binding.root
