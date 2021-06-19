@@ -115,20 +115,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="m" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/search_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.07" />
-
-    <FrameLayout
-        android:id="@+id/searchResultsFrameLayout"
-        android:layout_width="@dimen/match_constraints"
-        android:layout_height="@dimen/match_constraints"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/searchGuideline" />
 </androidx.constraintlayout.widget.ConstraintLayout>
