@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearchapp.databinding.FragmentListBinding
 import com.example.moviesearchapp.domain.data.Movie
 import com.example.moviesearchapp.ui.adapter.MoviesAdapter
+import com.example.moviesearchapp.ui.adapter.listener.OnClickListener
 import com.example.moviesearchapp.ui.extenstions.createAndShowWithoutAction
-import com.example.moviesearchapp.ui.listener.RecyclerItemClickListener
 import com.example.moviesearchapp.viewmodel.ViewModel
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), OnClickListener {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    private val upcomingList = mutableListOf<Movie>()
-    private val popularList = mutableListOf<Movie>()
-    private val topRatedList = mutableListOf<Movie>()
+    private val viewModel: ViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(ViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,15 +29,14 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(requireActivity()).get(ViewModel::class.java)
 
         if (savedInstanceState == null) {
             viewModel.requestMoviesList()
         }
 
-        val upcomingAdapter = MoviesAdapter()
-        val popularAdapter = MoviesAdapter()
-        val topRatedAdapter = MoviesAdapter()
+        val upcomingAdapter = MoviesAdapter(this)
+        val popularAdapter = MoviesAdapter(this)
+        val topRatedAdapter = MoviesAdapter(this)
 
         with(binding.upcomingMovieList) {
             layoutManager = GridLayoutManager(
@@ -45,20 +44,6 @@ class ListFragment : Fragment() {
                 SPAN_COUNT,
                 RecyclerView.HORIZONTAL,
                 false
-            )
-            addOnItemTouchListener(
-                RecyclerItemClickListener(
-                    context,
-                    binding.upcomingMovieList,
-                    object : RecyclerItemClickListener.OnItemClickListener {
-                        override fun onItemClicked(view: View, position: Int) {
-                            viewModel.onItemPressed(upcomingList[position])
-                        }
-
-                        override fun onLongItemClicked(view: View, position: Int) {
-
-                        }
-                    })
             )
             adapter = upcomingAdapter
         }
@@ -70,21 +55,6 @@ class ListFragment : Fragment() {
                 RecyclerView.HORIZONTAL,
                 false
             )
-            addOnItemTouchListener(
-                RecyclerItemClickListener(
-                    context,
-                    binding.popularMovieList,
-                    object : RecyclerItemClickListener.OnItemClickListener {
-                        override fun onItemClicked(view: View, position: Int) {
-                            viewModel.onItemPressed(popularList[position])
-                        }
-
-                        override fun onLongItemClicked(view: View, position: Int) {
-
-                        }
-                    }
-                )
-            )
             adapter = popularAdapter
         }
 
@@ -95,41 +65,22 @@ class ListFragment : Fragment() {
                 RecyclerView.HORIZONTAL,
                 false
             )
-            addOnItemTouchListener(
-                RecyclerItemClickListener(
-                    context,
-                    binding.topRatedMovieList,
-                    object : RecyclerItemClickListener.OnItemClickListener {
-                        override fun onItemClicked(view: View, position: Int) {
-                            viewModel.onItemPressed(topRatedList[position])
-                        }
-
-                        override fun onLongItemClicked(view: View, position: Int) {
-
-                        }
-                    }
-                )
-            )
             adapter = topRatedAdapter
         }
 
-        viewModel.getLiveDataUpcoming().observe(requireActivity()) {
-            upcomingList.addAll(it)
-            upcomingAdapter.addMovies(upcomingList)
-        }
-
-        viewModel.getLiveDataPopular().observe(requireActivity()) {
-            popularList.addAll(it)
-            popularAdapter.addMovies(popularList)
-        }
-
-        viewModel.getLiveDataTopRated().observe(requireActivity()) {
-            topRatedList.addAll(it)
-            topRatedAdapter.addMovies(topRatedList)
-        }
-
-        viewModel.getLiveDataError().observe(requireActivity()) {
-            binding.fragmentListRoot.createAndShowWithoutAction(it.toString())
+        with(viewModel) {
+            getLiveDataUpcoming().observe(viewLifecycleOwner) {
+                upcomingAdapter.addMovies(it)
+            }
+            getLiveDataPopular().observe(viewLifecycleOwner) {
+                popularAdapter.addMovies(it)
+            }
+            getLiveDataTopRated().observe(viewLifecycleOwner) {
+                topRatedAdapter.addMovies(it)
+            }
+            getLiveDataError().observe(viewLifecycleOwner) {
+                binding.fragmentListRoot.createAndShowWithoutAction(it.toString())
+            }
         }
 
         return binding.root
@@ -138,6 +89,10 @@ class ListFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onClick(movie: Movie) {
+        viewModel.onItemPressed(movie)
     }
 
     companion object {

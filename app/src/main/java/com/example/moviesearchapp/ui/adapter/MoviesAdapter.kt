@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearchapp.R
 import com.example.moviesearchapp.databinding.RowItemBinding
 import com.example.moviesearchapp.domain.data.Movie
+import com.example.moviesearchapp.ui.adapter.listener.OnClickListener
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
-    private val movies = mutableListOf<Movie>()
+class MoviesAdapter(
+    private val onClickListener: OnClickListener,
+    private val movies: MutableList<Movie> = mutableListOf()
+) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     fun addMovies(movies: List<Movie>) {
         this.movies.addAll(movies)
@@ -25,6 +28,9 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(movies[position])
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(movies[position])
+        }
     }
 
     override fun getItemCount(): Int = movies.size
