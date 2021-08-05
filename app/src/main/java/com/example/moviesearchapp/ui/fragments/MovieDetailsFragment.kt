@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.moviesearchapp.databinding.FragmentMovieDetailsBinding
-import com.example.moviesearchapp.domain.data.MovieDetails
 import com.example.moviesearchapp.viewmodel.ViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
