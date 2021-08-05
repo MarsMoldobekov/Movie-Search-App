@@ -20,7 +20,7 @@ class ListFragment : Fragment(), OnClickListener {
     private val binding get() = _binding!!
 
     private val viewModel: ViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(ViewModel::class.java)
+        ViewModelProvider(this@ListFragment).get(ViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -95,7 +95,7 @@ class ListFragment : Fragment(), OnClickListener {
         viewModel.onItemPressed(movie)
     }
 
-    companion object {
+    private companion object {
         private const val SPAN_COUNT = 1
     }
 }

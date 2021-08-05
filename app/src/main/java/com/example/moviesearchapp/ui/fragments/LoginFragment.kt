@@ -20,7 +20,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(requireActivity()).get(ViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(ViewModel::class.java)
 
         binding.buttonLogin.setOnClickListener {
             val textUsername: String = binding.textUsername.text.toString().trim()
@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
             viewModel.onLoginButtonPressed(textUsername, password)
         }
 
-        viewModel.getLiveDataAuth().observe(requireActivity()) {
+        viewModel.getLiveDataAuth().observe(viewLifecycleOwner) {
             val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
             findNavController().navigate(action)
         }
