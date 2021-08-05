@@ -50,10 +50,7 @@ fun View.createAndShow(
     action: (View) -> Unit,
     length: Int = Snackbar.LENGTH_INDEFINITE
 ) {
-    Snackbar.make(this, text, length).setAction(
-        resources.getString(resId),
-        action
-    ).show()
+    Snackbar.make(this, text, length).setAction(resources.getString(resId), action).show()
 }
 
 fun View.createAndShowWithoutAction(text: String, length: Int = Snackbar.LENGTH_INDEFINITE) {
