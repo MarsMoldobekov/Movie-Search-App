@@ -23,6 +23,10 @@ class ListFragment : Fragment(), OnClickListener {
         ViewModelProvider(this@ListFragment).get(ViewModel::class.java)
     }
 
+    private val upcomingAdapter = MoviesAdapter(this)
+    private val popularAdapter = MoviesAdapter(this)
+    private val topRatedAdapter = MoviesAdapter(this)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,49 +38,30 @@ class ListFragment : Fragment(), OnClickListener {
             viewModel.requestMoviesList()
         }
 
-        val upcomingAdapter = MoviesAdapter(this)
-        val popularAdapter = MoviesAdapter(this)
-        val topRatedAdapter = MoviesAdapter(this)
-
-        with(binding.upcomingMovieList) {
-            layoutManager = GridLayoutManager(
-                requireContext(),
-                SPAN_COUNT,
-                RecyclerView.HORIZONTAL,
-                false
-            )
-            adapter = upcomingAdapter
-        }
-
-        with(binding.popularMovieList) {
-            layoutManager = GridLayoutManager(
-                requireContext(),
-                SPAN_COUNT,
-                RecyclerView.HORIZONTAL,
-                false
-            )
-            adapter = popularAdapter
-        }
-
-        with(binding.topRatedMovieList) {
-            layoutManager = GridLayoutManager(
-                requireContext(),
-                SPAN_COUNT,
-                RecyclerView.HORIZONTAL,
-                false
-            )
-            adapter = topRatedAdapter
+        with(binding) {
+            with(upcomingMovieList) {
+                layoutManager = createGridLayoutManager()
+                adapter = upcomingAdapter
+            }
+            with(popularMovieList) {
+                layoutManager = createGridLayoutManager()
+                adapter = popularAdapter
+            }
+            with(topRatedMovieList) {
+                layoutManager = createGridLayoutManager()
+                adapter = topRatedAdapter
+            }
         }
 
         with(viewModel) {
             getLiveDataUpcoming().observe(viewLifecycleOwner) {
-                upcomingAdapter.addMovies(it)
+                upcomingAdapter.movies = it
             }
             getLiveDataPopular().observe(viewLifecycleOwner) {
-                popularAdapter.addMovies(it)
+                popularAdapter.movies = it
             }
             getLiveDataTopRated().observe(viewLifecycleOwner) {
-                topRatedAdapter.addMovies(it)
+                topRatedAdapter.movies = it
             }
             getLiveDataError().observe(viewLifecycleOwner) {
                 binding.fragmentListRoot.createAndShowWithoutAction(it.toString())
@@ -89,13 +74,19 @@ class ListFragment : Fragment(), OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        popularAdapter.removeListener()
+        upcomingAdapter.removeListener()
+        topRatedAdapter.removeListener()
     }
 
     override fun onClick(movie: Movie) {
         viewModel.onItemPressed(movie)
     }
 
-    private companion object {
-        private const val SPAN_COUNT = 1
-    }
+    private fun createGridLayoutManager() = GridLayoutManager(
+        requireContext(),
+        1,
+        RecyclerView.HORIZONTAL,
+        false
+    )
 }
