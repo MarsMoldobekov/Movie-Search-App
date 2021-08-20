@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/cardview_layout_margin"
-    android:clickable="@bool/cardview_layout_clickable_focusable"
-    android:focusable="@bool/cardview_layout_clickable_focusable">
+    android:layout_marginStart="12dp"
+    android:elevation="5dp"
+    android:orientation="vertical"
+    app:elevation="5dp">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/img_movie_picture"
+        android:layout_width="104dp"
+        android:layout_height="156dp"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/poster"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_height="46dp"
+        android:background="@color/background_item_movie_text_section">
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_marginRight="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_item_section"
+            tools:text="Lorem ipsum dolor sit amet" />
 
         <TextView
-            android:id="@+id/genre"
+            android:id="@+id/vote_average"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/average_vote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/title"
+            android:layout_gravity="end"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:visibility="gone"
+            tools:text="4.5" />
+    </RelativeLayout>
+</LinearLayout>
