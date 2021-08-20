@@ -23,11 +23,11 @@ class ViewModel : ViewModel() {
     fun onLoginButtonPressed(username: String, password: String) {
         repository.login(username, password, object : CallbackNet<Boolean> {
             override fun onSuccess(value: Boolean) {
-                liveDataAuth.value = value
+                liveDataAuth.postValue(true)
             }
 
             override fun onError(throwable: Throwable) {
-                liveDataLoginError.value = throwable
+                liveDataLoginError.postValue(throwable)
             }
         })
     }
