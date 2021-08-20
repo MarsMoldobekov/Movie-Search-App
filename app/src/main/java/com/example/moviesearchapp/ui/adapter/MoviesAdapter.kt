@@ -9,6 +9,7 @@ import com.example.moviesearchapp.R
 import com.example.moviesearchapp.databinding.RowItemBinding
 import com.example.moviesearchapp.domain.data.Movie
 import com.example.moviesearchapp.ui.adapter.listener.OnClickListener
+import com.squareup.picasso.Picasso
 
 class MoviesAdapter(
     private var onClickListener: OnClickListener?
@@ -42,12 +43,10 @@ class MoviesAdapter(
         private val binding get() = RowItemBinding.bind(itemView)
 
         fun bind(movie: Movie) {
-            with(binding) {
-                title.text = movie.title
-                averageVote.text = movie.vote_average.toString()
-                genre.text = movie.genre_ids.toString()
-                //TODO(bind movie's poster)
-            }
+            binding.title.text = movie.title
+            binding.voteAverage.text = movie.vote_average.toString()
+            Picasso.get().load("http://image.tmdb.org/t/p/w500/${movie.poster_path}")
+                .into(binding.imgMoviePicture)
 
             itemView.setOnClickListener {
                 onClickListener?.onClick(movie)
