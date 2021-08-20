@@ -8,4 +8,6 @@
     <dimen name="fragment_movie_list_search_bar_drawable_padding">16dp</dimen>
     <dimen name="fragment_movie_list_search_bar_elevation">2dp</dimen>
     <dimen name="fragment_movie_list_search_bar_padding_horizontal">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="text_item_section">12sp</dimen>
 </resources>
