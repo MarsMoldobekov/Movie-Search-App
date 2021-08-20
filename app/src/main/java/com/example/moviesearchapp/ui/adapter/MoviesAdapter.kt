@@ -1,5 +1,6 @@
 package com.example.moviesearchapp.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +13,17 @@ import com.example.moviesearchapp.ui.adapter.listener.OnClickListener
 class MoviesAdapter(
     private var onClickListener: OnClickListener?
 ) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
-    var movies: List<Movie> = listOf()
+
+    var movies: List<Movie>? = null
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    fun removeListener() {
+    fun removeReferences() {
         onClickListener = null
+        movies = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -29,10 +33,10 @@ class MoviesAdapter(
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(movies[position])
+        movies?.get(position)?.let { holder.bind(it) }
     }
 
-    override fun getItemCount(): Int = movies.size
+    override fun getItemCount(): Int = movies?.size ?: 0
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding get() = RowItemBinding.bind(itemView)

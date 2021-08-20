@@ -74,9 +74,9 @@ class ListFragment : Fragment(), OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-        popularAdapter.removeListener()
-        upcomingAdapter.removeListener()
-        topRatedAdapter.removeListener()
+        popularAdapter.removeReferences()
+        upcomingAdapter.removeReferences()
+        topRatedAdapter.removeReferences()
     }
 
     override fun onClick(movie: Movie) {
