@@ -44,13 +44,7 @@ class ViewModel : ViewModel() {
         })
     }
 
-    fun requestMoviesList() {
-        requestUpcoming()
-        requestPopular()
-        requestTopRated()
-    }
-
-    private fun requestUpcoming() {
+    fun requestUpcoming() {
         repository.getUpcoming(object : CallbackNet<List<Movie>> {
             override fun onSuccess(value: List<Movie>) {
                 liveDataUpcoming.value = value
@@ -62,7 +56,7 @@ class ViewModel : ViewModel() {
         })
     }
 
-    private fun requestPopular() {
+    fun requestPopular() {
         repository.getPopular(object : CallbackNet<List<Movie>> {
             override fun onSuccess(value: List<Movie>) {
                 liveDataPopular.value = value
@@ -74,7 +68,7 @@ class ViewModel : ViewModel() {
         })
     }
 
-    private fun requestTopRated() {
+    fun requestTopRated() {
         repository.getTopRated(object : CallbackNet<List<Movie>> {
             override fun onSuccess(value: List<Movie>) {
                 liveDataTopRated.value = value

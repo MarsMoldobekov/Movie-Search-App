@@ -1,4 +1,4 @@
-package com.example.moviesearchapp.ui.adapter
+package com.example.moviesearchapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearchapp.R
 import com.example.moviesearchapp.databinding.RowItemBinding
 import com.example.moviesearchapp.domain.data.Movie
-import com.example.moviesearchapp.ui.adapter.listener.OnClickListener
+import com.example.moviesearchapp.ui.adapters.listener.OnClickListener
 import com.squareup.picasso.Picasso
 
 class MoviesAdapter(

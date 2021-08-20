@@ -8,7 +8,9 @@
     <string name="menu_item_favourite">Favourite</string>
     <string name="menu_item_list">List</string>
     <string name="search_for_movies">Search for movies</string>
-    <string name="menu_top_rated">Top Rated</string>
-    <string name="menu_popular">Popular</string>
-    <string name="menu_upcoming">Upcoming</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular">Popular</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="movie_picture_image">Movie picture image</string>
+    <string name="menu_item_search">Search</string>
 </resources>

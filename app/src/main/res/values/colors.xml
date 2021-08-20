@@ -10,4 +10,5 @@
     <color name="primaryText">#212121</color>
     <color name="secondaryText">#727272</color>
     <color name="background_item_movie_text_section">#64000000</color>
+    <color name="main_background_color">#F3F1F5</color>
 </resources>
