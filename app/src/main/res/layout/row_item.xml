@@ -1,52 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="12dp"
-    android:elevation="5dp"
+    android:layout_margin="@dimen/card_view_margin"
+    android:elevation="@dimen/card_view_elevation"
     android:orientation="vertical"
-    app:elevation="5dp">
+    android:background="@color/card_view_main_color"
+    app:elevation="@dimen/card_view_elevation">
 
-    <ImageView
-        android:id="@+id/img_movie_picture"
-        android:layout_width="104dp"
-        android:layout_height="156dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/movie_picture_image" />
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:background="@color/background_item_movie_text_section">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_small"
-            android:layout_marginRight="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_small"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_item_section"
-            tools:text="Lorem ipsum dolor sit amet" />
+        <ImageView
+            android:id="@+id/img_movie_picture"
+            android:layout_width="@dimen/image_view_width"
+            android:layout_height="@dimen/image_view_height"
+            android:contentDescription="@string/movie_picture_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/fight_club_pic" />
 
-        <TextView
-            android:id="@+id/vote_average"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@id/title"
-            android:layout_gravity="end"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:textColor="@color/white"
-            android:textSize="11sp"
-            android:visibility="gone"
-            tools:text="4.5" />
-    </RelativeLayout>
-</LinearLayout>
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45" />
+
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/text_view_genres"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Fight Club" />
+
+        <TextView
+            android:id="@+id/text_view_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/genres"
+            app:layout_constraintBottom_toTopOf="@+id/text_view_release_date"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
+
+        <TextView
+            android:id="@+id/text_view_genres_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_genres"
+            app:layout_constraintStart_toEndOf="@+id/text_view_genres"
+            app:layout_constraintTop_toTopOf="@+id/text_view_genres"
+            tools:text="Thriller" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_baseline_star_rate_24"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_vote_average"
+            app:layout_constraintEnd_toStartOf="@+id/text_view_vote_average"
+            app:layout_constraintTop_toTopOf="@+id/text_view_vote_average"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/text_view_vote_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="8.0" />
+
+        <TextView
+            android:id="@+id/text_view_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_genres"
+            tools:text="August 6, 1999" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

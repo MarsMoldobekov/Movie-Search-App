@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="cardview_layout_clickable_focusable">true</bool>
     <bool name="activity_main_defaultNavHost">true</bool>
 </resources>

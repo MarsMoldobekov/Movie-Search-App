@@ -43,8 +43,10 @@ class MoviesAdapter(
         private val binding get() = RowItemBinding.bind(itemView)
 
         fun bind(movie: Movie) {
-            binding.title.text = movie.title
-            binding.voteAverage.text = movie.vote_average.toString()
+            binding.textViewTitle.text = movie.title
+            binding.textViewVoteAverage.text = movie.vote_average.toString()
+            binding.textViewReleaseDate.text = movie.release_date
+            binding.textViewGenresList.text = movie.genre_ids.toString()
             Picasso.get().load("http://image.tmdb.org/t/p/w500/${movie.poster_path}")
                 .into(binding.imgMoviePicture)
 
