@@ -34,11 +34,19 @@ class MoviesListsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.pager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
-            //TODO(reason = handle icons)
             when(position) {
-                POPULAR_TAB_POSITION -> tab.setText(R.string.popular)
-                TOP_RATED_TAB_POSITION -> tab.setText(R.string.top_rated)
-                UPCOMING_TAB_POSITION -> tab.setText(R.string.upcoming)
+                POPULAR_TAB_POSITION -> {
+                    tab.setIcon(R.drawable.ic_popular_text_color_primary_24)
+                    tab.setText(R.string.popular)
+                }
+                TOP_RATED_TAB_POSITION -> {
+                    tab.setIcon(R.drawable.ic_top_rated_text_color_primary_24)
+                    tab.setText(R.string.top_rated)
+                }
+                UPCOMING_TAB_POSITION -> {
+                    tab.setIcon(R.drawable.ic_upcoming_text_color_primary_24)
+                    tab.setText(R.string.upcoming)
+                }
             }
         }.attach()
     }

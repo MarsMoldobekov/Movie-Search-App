@@ -99,6 +99,6 @@ class ListsFragment : Fragment(), OnClickListener {
     }
 
     override fun onClick(movie: Movie) {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 }
