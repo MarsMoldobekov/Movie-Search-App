@@ -1,4 +1,4 @@
-package com.example.moviesearchapp.domain
+package com.example.moviesearchapp.domain.net
 
 interface CallbackNet<T> {
     fun onSuccess(value: T)

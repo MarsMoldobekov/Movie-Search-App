@@ -1,10 +1,10 @@
-package com.example.moviesearchapp.domain.auth
+package com.example.moviesearchapp.domain.net
 
 import com.example.moviesearchapp.BuildConfig
-import com.example.moviesearchapp.domain.CallbackNet
-import com.example.moviesearchapp.domain.data.LoginRequest
-import com.example.moviesearchapp.domain.data.LoginResponse
-import com.example.moviesearchapp.domain.data.TokenResponse
+import com.example.moviesearchapp.domain.net.api.LoginApi
+import com.example.moviesearchapp.domain.net.data.LoginRequest
+import com.example.moviesearchapp.domain.net.data.LoginResponse
+import com.example.moviesearchapp.domain.net.data.TokenResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

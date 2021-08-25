@@ -1,9 +1,10 @@
 package com.example.moviesearchapp.domain
 
-import com.example.moviesearchapp.domain.auth.AuthRepository
-import com.example.moviesearchapp.domain.data.Movie
-import com.example.moviesearchapp.domain.data.MovieDetails
-import com.example.moviesearchapp.domain.movies.MoviesRepository
+import com.example.moviesearchapp.domain.net.AuthRepository
+import com.example.moviesearchapp.domain.net.data.Movie
+import com.example.moviesearchapp.domain.net.data.MovieDetails
+import com.example.moviesearchapp.domain.net.MoviesRepository
+import com.example.moviesearchapp.domain.net.CallbackNet
 
 class Repository {
     private val authRepository = AuthRepository()

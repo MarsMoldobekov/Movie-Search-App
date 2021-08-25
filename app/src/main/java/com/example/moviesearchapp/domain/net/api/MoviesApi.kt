@@ -1,8 +1,8 @@
-package com.example.moviesearchapp.domain.movies
+package com.example.moviesearchapp.domain.net.api
 
-import com.example.moviesearchapp.domain.data.MovieDetails
-import com.example.moviesearchapp.domain.data.MoviesListResponse
-import com.example.moviesearchapp.domain.data.UpcomingResponse
+import com.example.moviesearchapp.domain.net.data.MovieDetails
+import com.example.moviesearchapp.domain.net.data.MoviesListResponse
+import com.example.moviesearchapp.domain.net.data.UpcomingResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

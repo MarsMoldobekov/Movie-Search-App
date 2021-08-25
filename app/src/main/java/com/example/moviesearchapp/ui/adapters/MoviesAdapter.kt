@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearchapp.R
 import com.example.moviesearchapp.databinding.RowItemBinding
-import com.example.moviesearchapp.domain.data.Movie
+import com.example.moviesearchapp.domain.net.data.Movie
 import com.example.moviesearchapp.ui.adapters.listener.OnClickListener
 import com.squareup.picasso.Picasso
 

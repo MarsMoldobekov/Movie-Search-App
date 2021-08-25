@@ -1,4 +1,4 @@
-package com.example.moviesearchapp.domain.data
+package com.example.moviesearchapp.domain.net.data
 
 data class SpokenLanguage(
     val iso_639_1: String,

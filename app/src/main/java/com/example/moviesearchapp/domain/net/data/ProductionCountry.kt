@@ -1,4 +1,4 @@
-package com.example.moviesearchapp.domain.data
+package com.example.moviesearchapp.domain.net.data
 
 data class ProductionCountry(
     val iso_3166_1: String,
