@@ -3,10 +3,10 @@ package com.example.moviesearchapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.moviesearchapp.domain.CallbackNet
+import com.example.moviesearchapp.domain.net.CallbackNet
 import com.example.moviesearchapp.domain.Repository
-import com.example.moviesearchapp.domain.data.Movie
-import com.example.moviesearchapp.domain.data.MovieDetails
+import com.example.moviesearchapp.domain.net.data.Movie
+import com.example.moviesearchapp.domain.net.data.MovieDetails
 
 class ViewModel : ViewModel() {
     private val liveDataAuth = MutableLiveData<Boolean>()

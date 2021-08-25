@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviesearchapp.databinding.FragmentListsBinding
-import com.example.moviesearchapp.domain.data.Movie
+import com.example.moviesearchapp.domain.net.data.Movie
 import com.example.moviesearchapp.ui.adapters.MoviesAdapter
 import com.example.moviesearchapp.ui.adapters.listener.OnClickListener
 import com.example.moviesearchapp.viewmodel.ViewModel
@@ -69,7 +69,7 @@ class ListsFragment : Fragment(), OnClickListener {
             }
         }
 
-        when(tabsTypes) {
+        when (tabsTypes) {
             TabsTypes.Upcoming -> {
                 viewModel.getLiveDataUpcoming().observe(viewLifecycleOwner) {
                     moviesAdapter.movies = it
@@ -99,6 +99,8 @@ class ListsFragment : Fragment(), OnClickListener {
     }
 
     override fun onClick(movie: Movie) {
-        //TODO("Not yet implemented")
+        viewModel.onItemPressed(movie)
+        MovieDetailsFragment.newInstance()
+            .show(childFragmentManager, MovieDetailsFragment.MOVIE_DETAILS_TAG)
     }
 }
