@@ -2,8 +2,7 @@ package com.example.moviesearchapp.domain.database.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.ForeignKey.CASCADE
-import androidx.room.ForeignKey.RESTRICT
+import androidx.room.ForeignKey.*
 
 @Entity(
     tableName = "Movies",
@@ -20,10 +19,16 @@ import androidx.room.ForeignKey.RESTRICT
         childColumns = ["original_language"],
         onDelete = CASCADE,
         onUpdate = CASCADE
+    ), ForeignKey(
+        entity = MoviesLanguages::class,
+        parentColumns = ["movie"],
+        childColumns = ["spoken_languages"],
+        onDelete = CASCADE,
+        onUpdate = NO_ACTION
     )]
 )
 data class Movies(
-    val id: Int,
+    val id: Long,
     val imdb_id: String,
     val homepage: String,
     //TODO(reason = add genres here)
@@ -36,7 +41,7 @@ data class Movies(
     val overview: String?,
     val popularity: Double,
     val poster_path: String?,
-    //TODO(reason = add spoken languages here)
+    val spoken_languages: Int,
     //TODO(reason = add production_companies here)
     //TODO(reason = add production_countries here)
     val release_date: String, //format: Date

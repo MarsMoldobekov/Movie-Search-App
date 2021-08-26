@@ -5,6 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Genres", primaryKeys = ["id"])
 data class Genres(
-    val id: Int,
+    val id: Long,
     val name: String
 )
