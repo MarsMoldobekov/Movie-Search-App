@@ -1,10 +1,10 @@
 package com.example.moviesearchapp.domain.database.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "Genres", primaryKeys = ["id"])
+@Entity(tableName = "Genres", primaryKeys = ["genre_id"])
 data class Genres(
-    val id: Long,
-    val name: String
+        @ColumnInfo(name = "genre_id") val genreID: Long,
+        val name: String
 )
