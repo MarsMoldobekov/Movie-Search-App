@@ -3,31 +3,37 @@ package com.example.moviesearchapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.moviesearchapp.App
 import com.example.moviesearchapp.domain.net.CallbackNet
 import com.example.moviesearchapp.domain.Repository
-import com.example.moviesearchapp.domain.net.data.Movie
-import com.example.moviesearchapp.domain.net.data.MovieDetails
+import com.example.moviesearchapp.domain.net.data.*
 
 class ViewModel : ViewModel() {
-    private val liveDataAuth = MutableLiveData<Boolean>()
-    private val liveDataLoginError = MutableLiveData<Throwable>()
+    private val liveDataAuth = MutableLiveData<AppStateLoading>()
+
     private val liveDataError = MutableLiveData<Throwable>()
     private val liveDataUpcoming = MutableLiveData<List<Movie>>()
     private val liveDataPopular = MutableLiveData<List<Movie>>()
     private val liveDataTopRated = MutableLiveData<List<Movie>>()
+
     private val liveDataMovieDetails = MutableLiveData<MovieDetails>()
     private val liveDataMovieDetailsError = MutableLiveData<Throwable>()
 
-    private val repository = Repository()
+    private val liveDataLoadingGenres = MutableLiveData<AppStateLoading>()
+    private val liveDataLoadingCountries = MutableLiveData<AppStateLoading>()
+    private val liveDataLoadingLanguages = MutableLiveData<AppStateLoading>()
+
+    private val repository = Repository(App.getMoviesHistoryDao())
 
     fun onLoginButtonPressed(username: String, password: String) {
-        repository.login(username, password, object : CallbackNet<Boolean> {
-            override fun onSuccess(value: Boolean) {
-                liveDataAuth.postValue(true)
+        liveDataAuth.value = AppStateLoading.Loading
+        repository.login(username, password, object : CallbackNet<Any> {
+            override fun onSuccess(value: Any) {
+                liveDataAuth.postValue(AppStateLoading.Success(true))
             }
 
             override fun onError(throwable: Throwable) {
-                liveDataLoginError.postValue(throwable)
+                liveDataAuth.postValue(AppStateLoading.Error(throwable))
             }
         })
     }
@@ -80,11 +86,48 @@ class ViewModel : ViewModel() {
         })
     }
 
-    fun getLiveDataAuth(): LiveData<Boolean> = liveDataAuth
+    fun loadGenres() {
+        repository.loadGenres(object : CallbackNet<List<Genre>> {
+            override fun onSuccess(value: List<Genre>) {
+                liveDataLoadingGenres.postValue(AppStateLoading.Success(Any()))
+                repository.insertGenres(value)
+            }
+
+            override fun onError(throwable: Throwable) {
+                liveDataLoadingGenres.postValue(AppStateLoading.Error(throwable))
+            }
+        })
+    }
+
+    fun loadCountries() {
+        repository.loadCountries(object : CallbackNet<List<Country>> {
+            override fun onSuccess(value: List<Country>) {
+                liveDataLoadingCountries.postValue(AppStateLoading.Success(Any()))
+                repository.insertCountries(value)
+            }
+
+            override fun onError(throwable: Throwable) {
+                liveDataLoadingCountries.postValue(AppStateLoading.Error(throwable))
+            }
+        })
+    }
+
+    fun loadLanguages() {
+        repository.loadLanguages(object : CallbackNet<List<Language>> {
+            override fun onSuccess(value: List<Language>) {
+                liveDataLoadingLanguages.postValue(AppStateLoading.Success(Any()))
+                repository.insertLanguages(value)
+            }
+
+            override fun onError(throwable: Throwable) {
+                liveDataLoadingLanguages.postValue(AppStateLoading.Error(throwable))
+            }
+        })
+    }
+
+    fun getLiveDataAuth(): LiveData<AppStateLoading> = liveDataAuth
 
     fun getLiveDataError(): LiveData<Throwable> = liveDataError
-
-    fun getLiveDataLoginError(): LiveData<Throwable> = liveDataLoginError
 
     fun getLiveDataUpcoming(): LiveData<List<Movie>> = liveDataUpcoming
 
@@ -95,4 +138,10 @@ class ViewModel : ViewModel() {
     fun getLiveDataMovieDetails(): LiveData<MovieDetails> = liveDataMovieDetails
 
     fun getLiveDataMovieDetailsError(): LiveData<Throwable> = liveDataMovieDetailsError
+
+    fun getLiveDataLoadingGenres(): LiveData<AppStateLoading> = liveDataLoadingGenres
+
+    fun getLiveDataLoadingCountries(): LiveData<AppStateLoading> = liveDataLoadingCountries
+
+    fun getLiveDataLoadingLanguages(): LiveData<AppStateLoading> = liveDataLoadingLanguages
 }

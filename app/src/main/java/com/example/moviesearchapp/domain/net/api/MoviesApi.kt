@@ -36,7 +36,7 @@ interface MoviesApi {
     //TODO(add parameter appendToResponse
     @GET("movie/{movie_id}")
     fun getDetails(
-        @Path("movie_id") movieId: Int,
+        @Path("movie_id") movieId: Long,
         @Query("api_key") apiKey: String,
         @Query("language") language: String = "en-US",
     ): Call<MovieDetails>

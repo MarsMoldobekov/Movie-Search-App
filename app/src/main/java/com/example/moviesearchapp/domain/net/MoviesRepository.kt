@@ -6,6 +6,7 @@ import com.example.moviesearchapp.domain.net.data.Movie
 import com.example.moviesearchapp.domain.net.data.MovieDetails
 import com.example.moviesearchapp.domain.net.data.MoviesListResponse
 import com.example.moviesearchapp.domain.net.data.UpcomingResponse
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,12 +14,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MoviesRepository {
-    private val retrofit: Retrofit = Retrofit.Builder()
+    private val moviesApi: MoviesApi = Retrofit.Builder()
         .baseUrl("https://api.themoviedb.org/3/")
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
         .build()
-
-    private val moviesApi: MoviesApi = retrofit.create(MoviesApi::class.java)
+        .create(MoviesApi::class.java)
 
     fun getUpcoming(
         language: String,
@@ -89,7 +89,7 @@ class MoviesRepository {
             })
     }
 
-    fun getDetails(movieId: Int, language: String, callbackNet: CallbackNet<MovieDetails>) {
+    fun getDetails(movieId: Long, language: String, callbackNet: CallbackNet<MovieDetails>) {
         moviesApi.getDetails(movieId, BuildConfig.TMDB_API_KEY_V3_AUTH, language)
             .enqueue(object : Callback<MovieDetails> {
                 override fun onResponse(

@@ -5,6 +5,6 @@ import androidx.room.Entity
 
 @Entity(tableName = "Genres", primaryKeys = ["genre_id"])
 data class Genres(
-        @ColumnInfo(name = "genre_id") val genreID: Long,
-        val name: String
+    @ColumnInfo(name = "genre_id") val genreID: Long,
+    val name: String
 )

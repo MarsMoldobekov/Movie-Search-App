@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.moviesearchapp.databinding.FragmentLoginBinding
+import com.example.moviesearchapp.viewmodel.AppStateLoading
 import com.example.moviesearchapp.viewmodel.ViewModel
 
 class LoginFragment : Fragment() {
@@ -29,13 +30,18 @@ class LoginFragment : Fragment() {
             viewModel.onLoginButtonPressed(textUsername, password)
         }
 
-        with(viewModel) {
-            getLiveDataAuth().observe(viewLifecycleOwner) {
-                val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
-                findNavController().navigate(action)
-            }
-            getLiveDataLoginError().observe(viewLifecycleOwner) {
-                //TODO(inform a user about an error)
+        viewModel.getLiveDataAuth().observe(viewLifecycleOwner) {
+            when (it) {
+                is AppStateLoading.Error -> {
+                    //TODO(inform a user about an error)
+                }
+                is AppStateLoading.Success -> {
+                    val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
+                    findNavController().navigate(action)
+                }
+                else -> {
+                    //TODO(handle loading process)
+                }
             }
         }
 

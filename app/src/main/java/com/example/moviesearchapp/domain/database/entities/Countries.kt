@@ -5,6 +5,6 @@ import androidx.room.Entity
 
 @Entity(tableName = "Countries", primaryKeys = ["iso_3166_1"])
 data class Countries(
-        @ColumnInfo(name = "iso_3166_1") val iso31661: String,
-        @ColumnInfo(name = "english_name") val englishName: String
+    @ColumnInfo(name = "iso_3166_1") val iso31661: String,
+    @ColumnInfo(name = "english_name") val englishName: String
 )
