@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_lists" />
 
     <fragment
-        android:id="@+id/navigation_favourite_movies"
-        android:name="com.example.moviesearchapp.ui.fragments.FavouriteMoviesFragment"
-        android:label="fragment_favourite_movies"
-        tools:layout="@layout/fragment_favourite_movies" />
+        android:id="@+id/navigation_map"
+        android:name="com.example.moviesearchapp.ui.fragments.MapsFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_maps" />
 
     <fragment
         android:id="@+id/navigation_home"

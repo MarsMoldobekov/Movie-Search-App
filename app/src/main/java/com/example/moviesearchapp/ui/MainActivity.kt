@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this).get(ViewModel::class.java)
     }
 
-    private val sharedPreferences: SharedPreferences = getPreferences(MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences by lazy {
+        getPreferences(MODE_PRIVATE)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +56,10 @@ class MainActivity : AppCompatActivity() {
         when (appStateLoading) {
             is AppStateLoading.Error -> {
                 //TODO(implement reloading)
-                sharedPreferences.edit().putBoolean(loadingData, false).apply()
+                sharedPreferences.edit()?.putBoolean(loadingData, false)?.apply()
             }
             is AppStateLoading.Success -> {
-                sharedPreferences.edit().putBoolean(loadingData, true).apply()
+                sharedPreferences.edit()?.putBoolean(loadingData, true)?.apply()
             }
             AppStateLoading.Loading -> {
                 //do nothing

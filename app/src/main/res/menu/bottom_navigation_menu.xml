@@ -6,9 +6,9 @@
         android:title="@string/menu_item_list" />
 
     <item
-        android:id="@+id/navigation_favourite_movies"
-        android:icon="@drawable/ic_baseline_favorite_24"
-        android:title="@string/menu_item_favourite" />
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="@string/menu_item_map" />
 
     <item
         android:id="@+id/navigation_home"
