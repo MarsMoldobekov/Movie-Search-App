@@ -11,6 +11,7 @@ import com.example.moviesearchapp.databinding.FragmentListsBinding
 import com.example.moviesearchapp.domain.net.data.Movie
 import com.example.moviesearchapp.ui.adapters.MoviesAdapter
 import com.example.moviesearchapp.ui.adapters.listener.OnClickListener
+import com.example.moviesearchapp.viewmodel.AppStateLoadingListMovie
 import com.example.moviesearchapp.viewmodel.ViewModel
 
 class ListsFragment : Fragment(), OnClickListener {
@@ -72,23 +73,33 @@ class ListsFragment : Fragment(), OnClickListener {
         when (tabsTypes) {
             TabsTypes.Upcoming -> {
                 viewModel.getLiveDataUpcoming().observe(viewLifecycleOwner) {
-                    moviesAdapter.movies = it
+                    realizeType(it)
                 }
             }
             TabsTypes.Popular -> {
                 viewModel.getLiveDataPopular().observe(viewLifecycleOwner) {
-                    moviesAdapter.movies = it
+                    realizeType(it)
                 }
             }
             TabsTypes.TopRated -> {
                 viewModel.getLiveDataTopRated().observe(viewLifecycleOwner) {
-                    moviesAdapter.movies = it
+                    realizeType(it)
                 }
             }
         }
+    }
 
-        viewModel.getLiveDataError().observe(viewLifecycleOwner) {
-            //TODO(reason = handle exception)
+    private fun realizeType(appStateLoadingListMovie: AppStateLoadingListMovie?) {
+        when (appStateLoadingListMovie) {
+            is AppStateLoadingListMovie.Error -> {
+                //TODO(show an error)
+            }
+            AppStateLoadingListMovie.Loading -> {
+                //TODO(show 'loading' layout)
+            }
+            is AppStateLoadingListMovie.Success -> {
+                moviesAdapter.movies = appStateLoadingListMovie.value
+            }
         }
     }
 

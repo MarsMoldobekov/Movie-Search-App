@@ -3,27 +3,27 @@ package com.example.moviesearchapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.moviesearchapp.App
-import com.example.moviesearchapp.domain.net.CallbackNet
+import androidx.lifecycle.viewModelScope
 import com.example.moviesearchapp.domain.Repository
+import com.example.moviesearchapp.domain.net.CallbackNet
 import com.example.moviesearchapp.domain.net.data.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ViewModel : ViewModel() {
-    private val liveDataAuth = MutableLiveData<AppStateLoading>()
-
-    private val liveDataError = MutableLiveData<Throwable>()
-    private val liveDataUpcoming = MutableLiveData<List<Movie>>()
-    private val liveDataPopular = MutableLiveData<List<Movie>>()
-    private val liveDataTopRated = MutableLiveData<List<Movie>>()
-
-    private val liveDataMovieDetails = MutableLiveData<MovieDetails>()
-    private val liveDataMovieDetailsError = MutableLiveData<Throwable>()
-
     private val liveDataLoadingGenres = MutableLiveData<AppStateLoading>()
     private val liveDataLoadingCountries = MutableLiveData<AppStateLoading>()
     private val liveDataLoadingLanguages = MutableLiveData<AppStateLoading>()
 
-    private val repository = Repository(App.getMoviesHistoryDao())
+    private val liveDataAuth = MutableLiveData<AppStateLoading>()
+
+    private val liveDataUpcoming = MutableLiveData<AppStateLoadingListMovie>()
+    private val liveDataPopular = MutableLiveData<AppStateLoadingListMovie>()
+    private val liveDataTopRated = MutableLiveData<AppStateLoadingListMovie>()
+
+    private val liveDataMovieDetails = MutableLiveData<AppStateLoadingMovieDetails>()
+
+    private val repository = Repository()
 
     fun onLoginButtonPressed(username: String, password: String) {
         liveDataAuth.value = AppStateLoading.Loading
@@ -39,49 +39,54 @@ class ViewModel : ViewModel() {
     }
 
     fun onItemPressed(movie: Movie) {
+        liveDataMovieDetails.value = AppStateLoadingMovieDetails.Loading
         repository.getDetails(movie.id, object : CallbackNet<MovieDetails> {
             override fun onSuccess(value: MovieDetails) {
-                liveDataMovieDetails.value = value
+                liveDataMovieDetails.postValue(AppStateLoadingMovieDetails.Success(value))
+                viewModelScope.launch(Dispatchers.IO) { repository.insertMovie(value) }
             }
 
             override fun onError(throwable: Throwable) {
-                liveDataMovieDetailsError.value = throwable
+                liveDataMovieDetails.postValue(AppStateLoadingMovieDetails.Error(throwable))
             }
         })
     }
 
     fun requestUpcoming() {
+        liveDataUpcoming.value = AppStateLoadingListMovie.Loading
         repository.getUpcoming(object : CallbackNet<List<Movie>> {
             override fun onSuccess(value: List<Movie>) {
-                liveDataUpcoming.value = value
+                liveDataUpcoming.postValue(AppStateLoadingListMovie.Success(value))
             }
 
             override fun onError(throwable: Throwable) {
-                liveDataError.value = throwable
+                liveDataUpcoming.postValue(AppStateLoadingListMovie.Error(throwable))
             }
         })
     }
 
     fun requestPopular() {
+        liveDataPopular.value = AppStateLoadingListMovie.Loading
         repository.getPopular(object : CallbackNet<List<Movie>> {
             override fun onSuccess(value: List<Movie>) {
-                liveDataPopular.value = value
+                liveDataPopular.postValue(AppStateLoadingListMovie.Success(value))
             }
 
             override fun onError(throwable: Throwable) {
-                liveDataError.value = throwable
+                liveDataPopular.postValue(AppStateLoadingListMovie.Error(throwable))
             }
         })
     }
 
     fun requestTopRated() {
+        liveDataTopRated.value = AppStateLoadingListMovie.Loading
         repository.getTopRated(object : CallbackNet<List<Movie>> {
             override fun onSuccess(value: List<Movie>) {
-                liveDataTopRated.value = value
+                liveDataTopRated.postValue(AppStateLoadingListMovie.Success(value))
             }
 
             override fun onError(throwable: Throwable) {
-                liveDataError.value = throwable
+                liveDataTopRated.postValue(AppStateLoadingListMovie.Error(throwable))
             }
         })
     }
@@ -90,7 +95,7 @@ class ViewModel : ViewModel() {
         repository.loadGenres(object : CallbackNet<List<Genre>> {
             override fun onSuccess(value: List<Genre>) {
                 liveDataLoadingGenres.postValue(AppStateLoading.Success(Any()))
-                repository.insertGenres(value)
+                viewModelScope.launch(Dispatchers.IO) { repository.insertGenres(value) }
             }
 
             override fun onError(throwable: Throwable) {
@@ -103,7 +108,7 @@ class ViewModel : ViewModel() {
         repository.loadCountries(object : CallbackNet<List<Country>> {
             override fun onSuccess(value: List<Country>) {
                 liveDataLoadingCountries.postValue(AppStateLoading.Success(Any()))
-                repository.insertCountries(value)
+                viewModelScope.launch(Dispatchers.IO) { repository.insertCountries(value) }
             }
 
             override fun onError(throwable: Throwable) {
@@ -116,7 +121,7 @@ class ViewModel : ViewModel() {
         repository.loadLanguages(object : CallbackNet<List<Language>> {
             override fun onSuccess(value: List<Language>) {
                 liveDataLoadingLanguages.postValue(AppStateLoading.Success(Any()))
-                repository.insertLanguages(value)
+                viewModelScope.launch { repository.insertLanguages(value) }
             }
 
             override fun onError(throwable: Throwable) {
@@ -127,17 +132,13 @@ class ViewModel : ViewModel() {
 
     fun getLiveDataAuth(): LiveData<AppStateLoading> = liveDataAuth
 
-    fun getLiveDataError(): LiveData<Throwable> = liveDataError
+    fun getLiveDataUpcoming(): LiveData<AppStateLoadingListMovie> = liveDataUpcoming
 
-    fun getLiveDataUpcoming(): LiveData<List<Movie>> = liveDataUpcoming
+    fun getLiveDataPopular(): LiveData<AppStateLoadingListMovie> = liveDataPopular
 
-    fun getLiveDataPopular(): LiveData<List<Movie>> = liveDataPopular
+    fun getLiveDataTopRated(): LiveData<AppStateLoadingListMovie> = liveDataTopRated
 
-    fun getLiveDataTopRated(): LiveData<List<Movie>> = liveDataTopRated
-
-    fun getLiveDataMovieDetails(): LiveData<MovieDetails> = liveDataMovieDetails
-
-    fun getLiveDataMovieDetailsError(): LiveData<Throwable> = liveDataMovieDetailsError
+    fun getLiveDataMovieDetails(): LiveData<AppStateLoadingMovieDetails> = liveDataMovieDetails
 
     fun getLiveDataLoadingGenres(): LiveData<AppStateLoading> = liveDataLoadingGenres
 

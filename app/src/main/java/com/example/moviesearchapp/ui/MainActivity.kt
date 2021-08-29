@@ -59,6 +59,9 @@ class MainActivity : AppCompatActivity() {
             is AppStateLoading.Success -> {
                 sharedPreferences.edit().putBoolean(loadingData, true).apply()
             }
+            AppStateLoading.Loading -> {
+                //do nothing
+            }
         }
     }
 }

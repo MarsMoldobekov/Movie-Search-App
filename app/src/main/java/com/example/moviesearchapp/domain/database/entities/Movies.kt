@@ -9,8 +9,8 @@ import androidx.room.Entity
 @Entity(tableName = "Movies", primaryKeys = ["movie_id"])
 data class Movies(
     @ColumnInfo(name = "movie_id") val movieID: Long,
-    @ColumnInfo(name = "imdb_id") val imdbID: String,
-    val homepage: String,
+    @ColumnInfo(name = "imdb_id") val imdbID: String?,
+    val homepage: String?,
     val budget: Int,
     @ColumnInfo(name = "backdrop_path") val backdropPath: String?,
     val adult: Boolean,
